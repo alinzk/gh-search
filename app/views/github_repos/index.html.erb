@@ -1,0 +1,39 @@
+<div>
+  <h1>GithubRepo Search</h1>
+
+  <form action="<% root_path %>">
+    <input type="search" name="q" value="<%= @search_query %>" />
+
+    <button type="submit">search</button>
+  </form>
+
+  <div>
+    <% if @search_query && @repos.empty? %>
+      <p>No search results</p>
+    <% end %>
+
+    <% if @total_results.positive? %>
+      <p>Found <%= @total_results %> results and displaying first <%= @repos.size %>.</p>
+    <% end %>
+
+    <% if @error %>
+      <p>ERROR: <%= @error %></p>
+    <% end %>
+
+    <ol>
+      <% @repos.each do |repo| %>
+        <li>
+          <a href="<%= repo.html_url %>" target="_blank">
+            <%= repo.name %>
+          </a>
+          <span>by</span> 
+          <a href="https://github.com/<%= repo.owner.login %>" target="_blank">
+            <%= repo.owner.login %>
+          </a>
+          <br />
+          <p><%= repo.description %></p>
+        </li>
+      <% end %>
+    </ol>
+  </div>
+</div>
